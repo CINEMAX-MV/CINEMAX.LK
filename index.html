@@ -551,62 +551,17 @@ footer {
 
 
 </footer>
-  
-  <script>
-let currentPage = 1;
-const moviesPerPage = 10;
+<script>
+const searchInput = document.getElementById("searchInput");  // search box එකට link
+const movies = document.querySelectorAll(".movie");          // සියලු movie cards
 
-const searchInput = document.getElementById("searchInput");
-let allMovies = Array.from(document.querySelectorAll(".movie"));
+searchInput.addEventListener("keyup", function () {          // key type කරන විට
+  const value = searchInput.value.toLowerCase();             // typed value small letters
 
-const pageInfo = document.getElementById("pageInfo");
-const prevBtn = document.getElementById("prevBtn");
-const nextBtn = document.getElementById("nextBtn");
-
-function showMovies(page, movieList = allMovies) {
-  const totalPages = Math.ceil(movieList.length / moviesPerPage);
-  const start = (page - 1) * moviesPerPage;
-  const end = start + moviesPerPage;
-
-  allMovies.forEach(movie => movie.style.display = "none");
-
-  movieList.slice(start, end).forEach(movie => {
-    movie.style.display = "block";
+  movies.forEach(movie => {                                  // සියලු movie cards බලන්න
+    const title = movie.querySelector("h3").innerText.toLowerCase(); // movie title
+    movie.style.display = title.includes(value) ? "block" : "none"; // filter
   });
-
-  pageInfo.textContent = `Page ${page} of ${totalPages}`;
-  prevBtn.disabled = page === 1;
-  nextBtn.disabled = page === totalPages;
-}
-
-// Pagination buttons
-prevBtn.onclick = () => {
-  if (currentPage > 1) {
-    currentPage--;
-    showMovies(currentPage);
-  }
-};
-
-nextBtn.onclick = () => {
-  const totalPages = Math.ceil(allMovies.length / moviesPerPage);
-  if (currentPage < totalPages) {
-    currentPage++;
-    showMovies(currentPage);
-  }
-};
-
-// Search
-searchInput.addEventListener("keyup", () => {
-  const value = searchInput.value.toLowerCase();
-
-  const filteredMovies = allMovies.filter(movie =>
-    movie.querySelector("h3").innerText.toLowerCase().includes(value)
-  );
-
-  currentPage = 1;
-  showMovies(currentPage, filteredMovies);
 });
-
-// First load
-showMovies(currentPage);
+<script>
 </html>
