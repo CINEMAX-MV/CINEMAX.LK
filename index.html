@@ -16,6 +16,47 @@
   padding: 0;
 }
 
+/* ... ඔයාගේ කලින් CSS ... */
+
+footer {
+  background: #111;
+  text-align: center;
+  padding: 20px;
+  margin-top: 30px;
+  font-size: 14px;
+  color: #aaa;
+}
+
+/* Pagination */
+#pagination button {
+  background: #e50914;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  margin: 0 5px;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#pagination button:hover {
+  background: #ff1f2f;
+}
+
+#pagination button:disabled {
+  background: #555;
+  cursor: not-allowed;
+}
+
+#pageInfo {
+  font-size: 14px;
+  color: #ccc;
+}
+</style>
+  
+  }
+
 body {
   font-family: 'Poppins', sans-serif;
   background: #0f0f0f;
@@ -492,6 +533,15 @@ footer {
      ▶ Watch / Download
   </a>
 </div>
+  
+</div>  <!-- movies close -->
+
+<div id="pagination" style="text-align:center; margin-top:30px;">
+  <button id="prevBtn">⬅ Prev</button>
+  <span id="pageInfo" style="margin:0 15px;"></span>
+  <button id="nextBtn">Next ➡</button>
+</div>
+
 <a class="whatsapp" href="https://wa.me/94740571366">💬 WhatsApp</a>
 
 <footer>
