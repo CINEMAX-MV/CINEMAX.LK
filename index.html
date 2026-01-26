@@ -551,19 +551,6 @@ footer {
 
 
 </footer>
-
-<script>
-const searchInput = document.getElementById("searchInput");  // search box එකට link
-const movies = document.querySelectorAll(".movie");          // සියලු movie cards
-
-searchInput.addEventListener("keyup", function () {          // key type කරන විට
-  const value = searchInput.value.toLowerCase();             // typed value small letters
-
-  movies.forEach(movie => {                                  // සියලු movie cards බලන්න
-    const title = movie.querySelector("h3").innerText.toLowerCase(); // movie title
-    movie.style.display = title.includes(value) ? "block" : "none"; // filter
-  });
-});
 <script>
 let currentPage = 1;
 const moviesPerPage = 10;
