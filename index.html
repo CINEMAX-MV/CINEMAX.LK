@@ -9,54 +9,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
-/* your existing CSS */
-
-/* Footer */
-footer {
-  background: #111;
-  text-align: center;
-  padding: 20px;
-  margin-top: 30px;
-  font-size: 14px;
-  color: #aaa;
-}
-
-/* Pagination */
-#pagination {
-  text-align: center;
-  margin: 30px 0;
-}
-
-#pagination button {
-  background: #e50914;
-  color: #fff;
-  border: none;
-  padding: 8px 16px;
-  margin: 0 5px;
-  border-radius: 20px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-#pagination button:hover {
-  background: #ff1f2d;
-}
-
-#pagination button:disabled {
-  background: #555;
-  cursor: not-allowed;
-}
-
-#pageInfo {
-  font-size: 14px;
-  color: #ccc;
-}
-
 body {
   font-family: 'Poppins', sans-serif;
   background: #0f0f0f;
   color: #fff;
+  margin: 0;
+  padding: 0;
 }
 
 /* Header */
@@ -64,13 +22,11 @@ header {
   background: url("https://i.ibb.co/Cs7SbdVt/RD393437343037303731353740732e77686174736170702e6e6574-634148.jpg");
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
   padding: 40px 0;
   text-align: center;
   font-size: 28px;
   font-weight: 700;
 }
-  
 header p {
   font-size: 14px;
   color: #eee;
@@ -86,29 +42,21 @@ nav {
   background: #111;
   padding: 12px 0;
 }
-
 nav a {
   color: #fff;
   text-decoration: none;
   font-weight: 500;
-  transition: 0.2s;
 }
-
-nav a:hover {
-  color: #e50914;
-}
+nav a:hover { color: #e50914; }
 
 /* Container */
-.container {
-  padding: 20px;
-}
+.container { padding: 20px; }
 
 /* Search */
 .search-box {
   max-width: 400px;
   margin: 20px auto;
 }
-
 .search-box input {
   width: 100%;
   padding: 12px 15px;
@@ -124,27 +72,20 @@ nav a:hover {
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 20px;
 }
-
-/* Movie Card */
 .movie {
   background: #1c1c1c;
   border-radius: 12px;
   overflow: hidden;
   text-align: center;
+  cursor: pointer;
   transition: transform 0.3s, box-shadow 0.3s;
-  position: relative;
 }
-
 .movie:hover {
   transform: scale(1.05);
   box-shadow: 0 8px 20px rgba(229,9,20,0.5);
 }
-
-.movie img {
-  width: 100%;
-  height: 240px;
-  object-fit: cover;
-}
+.movie img { width: 100%; height: 240px; object-fit: cover; }
+.movie h3 { font-size: 16px; margin: 10px 0; }
 
 /* Badge */
 .badge {
@@ -156,17 +97,6 @@ nav a:hover {
   font-size: 11px;
   border-radius: 5px;
   font-weight: bold;
-}
-
-.movie h3 {
-  font-size: 16px;
-  margin: 10px 0 5px;
-}
-
-.movie p {
-  font-size: 13px;
-  color: #ccc;
-  margin-bottom: 10px;
 }
 
 /* WhatsApp Button */
@@ -181,11 +111,6 @@ nav a:hover {
   text-decoration: none;
   font-weight: bold;
   box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-  transition: 0.3s;
-}
-
-.whatsapp:hover {
-  background: #1ebe57;
 }
 
 /* Footer */
@@ -196,6 +121,39 @@ footer {
   margin-top: 30px;
   font-size: 14px;
   color: #aaa;
+}
+
+/* Popup / Overlay */
+#movieDetails {
+  display: none;
+  position: fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background: rgba(0,0,0,0.95);
+  color: #fff;
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+}
+#movieDetails .closeBtn {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 30px;
+  cursor: pointer;
+  color: #fff;
+}
+#movieDetails .watch-btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: #e50914;
+  color: #fff;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: bold;
 }
 </style>
 </head>
@@ -214,352 +172,107 @@ footer {
 </nav>
 
 <div class="container">
-
   <h2>Latest Movies</h2>
 
-<div class="search-box">
-  <input type="text" id="searchInput" placeholder="Search movies..." />
-</div>
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Search movies..." />
+  </div>
+
   <div class="movies">
-
-<div class="movie">
-  <span class="badge">HD</span>
-  <img src="https://i.ibb.co/Q7BNQrqf/RD393437343037303731353740732e77686174736170702e6e6574-569238.jpg" alt="Ratatouille">
-
-  <h3>Ratatouille ( 2007 )</h3>
-  <p>Action | Sinhala</p>
-
-  <a href="https://drive.google.com/file/d/1RnELa1HMU_B90srWoTE1woZCQRGAFI4n/view?usp=drivesdk"
-     style="
-       display:inline-block;
-       margin-bottom:12px;
-       padding:6px 12px;
-       background:#e50914;
-       color:#fff;
-       text-decoration:none;
-       border-radius:20px;
-       font-size:13px;
-     ">
-     ▶ Watch / Download
-  </a>
-</div>
-
-   <div class="movie">
-  <span class="badge">HD</span>
-  <img src="https://i.ibb.co/yx7RvfK/RD393437343037303731353740732e77686174736170702e6e6574-177842.jpg"Movie">
-
-  <h3>Soorya (2025)</h3>
-  <p>Action | Sinhala</p>
-
-  <a href="https://publicfiletolinkbotsvhshs-82bc20e41c1f.herokuapp.com/75658/Soorya.2025.720p.%40sinhalaaaa.mkv?hash=AgAD5h"
-     style="
-       display:inline-block;
-       margin-bottom:12px;
-       padding:6px 12px;
-       background:#e50914;
-       color:#fff;
-       text-decoration:none;
-       border-radius:20px;
-       font-size:13px;
-     ">
-     ▶ Watch / Download
-  </a>
-   </div>
-  
-<div class="movie">
-  <span class="badge">HD ( CINEMAX )</span>
-  <img src="https://i.ibb.co/6J81Yfvs/RD393437353638333237343640732e77686174736170702e6e6574-566677.jpg" alt="Movie">
-
-  <h3>Jack And The Giant Slayer (2013)</h3>
-  <p>Action | sinhala</p>
-
-  <a href="https://drive.google.com/file/d/1DnUKRh6I7s6_vWGQrE5R_iYkjzyFTWFB/view"
-     style="
-       display:inline-block;
-       margin-bottom:12px;
-       padding:6px 12px;
-       background:#e50914;
-       color:#fff;
-       text-decoration:none;
-       border-radius:20px;
-       font-size:13px;
-     ">
-     ▶ Watch / Download
-  </a>
-</div>
-  
+    <!-- Movie 1 -->
     <div class="movie">
-  <span class="badge">HD ( CINEMAX )</span>
-  <img src="https://i.ibb.co/JWBvyc5X/RD393437343037303731353740732e77686174736170702e6e6574-308706.jpg" alt="Movie">
-
-  <h3>Jungle cruise (2021)</h3>
-  <p>Action | Sinhala</p>
-
-  <a href="https://drive.google.com/file/d/1DqOfe5-WiFNkCmkmu1UBMRNKENAVEKf2/view"
-     style="
-       display:inline-block;
-       margin-bottom:12px;
-       padding:6px 12px;
-       background:#e50914;
-       color:#fff;
-       text-decoration:none;
-       border-radius:20px;
-       font-size:13px;
-     ">
-     ▶ Watch / Download
-  </a>
+      <img src="https://i.ibb.co/Q7BNQrqf/RD393437343037303731353740732e77686174736170702e6e6574-569238.jpg" alt="Ratatouille">
+      <h3>Ratatouille (2007)</h3>
     </div>
 
-  <div class="movie">
-  <span class="badge">HD</span>
-  <img src="https://i.ibb.co/0pT6Mz6F/RD393437343037303731353740732e77686174736170702e6e6574-569534.jpg" alt="Movie">
+    <!-- Movie 2 -->
+    <div class="movie">
+      <img src="https://i.ibb.co/yx7RvfK/RD393437343037303731353740732e77686174736170702e6e6574-177842.jpg" alt="Soorya">
+      <h3>Soorya (2025)</h3>
+    </div>
 
-  <h3>Garfield : The movie (2004)</h3>
-  <p>Action | සිංහල</p>
+    <!-- Add more movies here similarly -->
+  </div> <!-- movies close -->
 
-  <a href="https://drive.google.com/file/d/1UIJ0eAsC_BB6qobv8IOjmcrnmffB75U4/view?usp=drivesdk"
-     style="
-       display:inline-block;
-       margin-bottom:12px;
-       padding:6px 12px;
-       background:#e50914;
-       color:#fff;
-       text-decoration:none;
-       border-radius:20px;
-       font-size:13px;
-     ">
-     ▶ Watch / Download
-  </a>
+  <!-- Pagination -->
+  <div id="pagination" style="text-align:center; margin-top:30px;">
+    <button id="prevBtn">⬅ Prev</button>
+    <span id="pageInfo" style="margin:0 15px;"></span>
+    <button id="nextBtn">Next ➡</button>
   </div>
 
-  <div class="movie">
-  <span class="badge">HD</span>
-  <img src="https://i.ibb.co/nsb03dpn/RD393437343037303731353740732e77686174736170702e6e6574-673085.jpg" alt="Movie">
-
-  <h3>paulie (1998 )</h3>
-  <p>Action | සිංහල</p>
-
-  <a href="https://drive.google.com/file/d/1wYOvszMsYCObW2RERK5k8nuEy9n6p6OY/view?usp=drivesdk"
-     style="
-       display:inline-block;
-       margin-bottom:12px;
-       padding:6px 12px;
-       background:#e50914;
-       color:#fff;
-       text-decoration:none;
-       border-radius:20px;
-       font-size:13px;
-     ">
-     ▶ Watch / Download
-  </a>
-  </div>
-
-  <div class="movie">
-  <span class="badge">HD</span>
-  <img src="https://files.catbox.moe/km8kh1.jpg" alt="Movie">
-
-  <h3>Luck (2022)</h3>
-  <p>Action | සිංහල</p>
-
-  <a href="https://drive.google.com/file/d/1xhkukzE_Frv14o98vaZFBRENYRSS_50W/view?usp=drivesdk"
-     style="
-       display:inline-block;
-       margin-bottom:12px;
-       padding:6px 12px;
-       background:#e50914;
-       color:#fff;
-       text-decoration:none;
-       border-radius:20px;
-       font-size:13px;
-     ">
-     ▶ Watch / Download
-  </a>
-  </div>
-
-  <div class="movie">
-  <span class="badge">HD</span>
-  <img src="https://i.ibb.co/hJ8cRShj/RD393437343037303731353740732e77686174736170702e6e6574-907221.jpg" alt="Movie">
-
-  <h3>Bee (2007)</h3>
-  <p>Action | Sinhala</p>
-
-  <a href="https://drive.google.com/file/d/1gxFdxEDI8dbG8Xs_1oPQvYPHPAiKsOkj/view?usp=drivesdk"
-     style="
-       display:inline-block;
-       margin-bottom:12px;
-       padding:6px 12px;
-       background:#e50914;
-       color:#fff;
-       text-decoration:none;
-       border-radius:20px;
-       font-size:13px;
-     ">
-     ▶ Watch / Download
-  </a>
-  </div>
-
-  <div class="movie">
-  <span class="badge">HD</span>
-  <img src="https://i.ibb.co/zHRyTnXr/RD393437343037303731353740732e77686174736170702e6e6574-121909.jpg" alt="Movie">
-
-  <h3>Tinkerbell( 2008 )</h3>
-  <p>Action | සිංහල</p>
-
-  <a href="https://drive.google.com/file/d/1lqHBbGM_uMIF6m7qlLSx6ou1SD8-t0xW/view?usp=drivesdk"
-     style="
-       display:inline-block;
-       margin-bottom:12px;
-       padding:6px 12px;
-       background:#e50914;
-       color:#fff;
-       text-decoration:none;
-       border-radius:20px;
-       font-size:13px;
-     ">
-     ▶ Watch / Download
-  </a>
 </div>
 
-  <div class="movie">
-  <span class="badge">HD</span>
-  <img src="https://i.ibb.co/4ZBzG9c2/RD393437343037303731353740732e77686174736170702e6e6574-486606.jpg" alt="Movie">
-
-  <h3>Bridge to therabithia (2007)</h3>
-  <p>Action | සිංහල</p>
-
-  <a href="https://drive.google.com/file/d/1-QX2a21LhBsV9WW04TOODET6859KUKee/view?usp=drivesdk"
-     style="
-       display:inline-block;
-       margin-bottom:12px;
-       padding:6px 12px;
-       background:#e50914;
-       color:#fff;
-       text-decoration:none;
-       border-radius:20px;
-       font-size:13px;
-     ">
-     ▶ Watch / Download
-  </a>
-</div>
-
-  <div class="movie">
-  <span class="badge">HD</span>
-  <img src="https://i.ibb.co/k2h5tBLK/RD393437343037303731353740732e77686174736170702e6e6574-595944.jpg" alt="Movie">
-
-  <h3>The Penguins of Madagascar (2014)</h3>
-  <p>Action | සිංහල</p>
-
-  <a href="https://iws.sinhalachr.workers.dev/?id=Movzm1z3zhhQ2a7YvV4qLKGo&assetToken=zVwfjA5eG6oEk7bFqahs2K2i&download=true"
-     style="
-       display:inline-block;
-       margin-bottom:12px;
-       padding:6px 12px;
-       background:#e50914;
-       color:#fff;
-       text-decoration:none;
-       border-radius:20px;
-       font-size:13px;
-     ">
-     ▶ Watch / Download
-  </a>
-  </div>
-
-  <div class="movie">
-  <span class="badge">HD</span>
-  <img src="https://files.catbox.moe/xxim8u.jpg" alt="Movie">
-
-  <h3>Kung Fu Panda 1(2008)</h3>
-  <p>Action | සිංහල</p>
-  <p>Mega | CINEMAX.COM
-
-  <a href="https://mega.nz/file/HUtnyKJS#gGNSSwuAq8j4nDjZGgQuppZ9qB5muqo1bZXuZfdqeV4"
-     style="
-       display:inline-block;
-       margin-bottom:12px;
-       padding:6px 12px;
-       background:#e50914;
-       color:#fff;
-       text-decoration:none;
-       border-radius:20px;
-       font-size:13px;
-     ">
-     ▶ Watch / Download
-  </a>
-  </div>
-
-  <div class="movie">
-  <span class="badge">HD</span>
-  <img src="https://i.ibb.co/BHj6FL0b/RD393437353638333237343640732e77686174736170702e6e6574-706082.jpg" alt="Movie">
-
-  <h3>Kung Fu Panda 2 (2011)</h3>
-  <p>Action |sinhala</p>
-
-  <a href="https://drive.google.com/file/d/1Cci1i06NwwJpu0DKVjVA8P6xJ-PopXjy/view?usp=drivesdk"
-     style="
-       display:inline-block;
-       margin-bottom:12px;
-       padding:6px 12px;
-       background:#e50914;
-       color:#fff;
-       text-decoration:none;
-       border-radius:20px;
-       font-size:13px;
-     ">
-     ▶ Watch / Download
-  </a>
-  </div>
-
-<div class="movie">
-  <span class="badge">HD</span>
-  <img src="https://i.ibb.co/WWNNkr9J/RD393437353638333237343640732e77686174736170702e6e6574-595804.jpg" alt="Movie">
-
-  <h3>Kung Fu Panda 3(2016)</h3>
-  <p>Action | Tamil</p>
-
-  <a href="https://drive.google.com/file/d/1x56ocqZ9vANqf1xb66ILOn0w-EGc-cXm/view?usp=drivesdk"
-   style="
-       display:inline-block;
-       margin-bottom:12px;
-       padding:6px 12px;
-       background:#e50914;
-       color:#fff;
-       text-decoration:none;
-       border-radius:20px;
-       font-size:13px;
-     ">
-     ▶ Watch / Download
-  </a>
-</div>
-  
-</div>  <!-- movies close -->
-
-<div id="pagination" style="text-align:center; margin-top:30px;">
-  <button id="prevBtn">⬅ Prev</button>
-  <span id="pageInfo" style="margin:0 15px;"></span>
-  <button id="nextBtn">Next ➡</button>
-</div>
-
+<!-- WhatsApp -->
 <a class="whatsapp" href="https://wa.me/94740571366">💬 WhatsApp</a>
 
+<!-- Footer -->
 <footer>
 © 2026 CINEMAX | Sinhala Movie Website
 © MAIN CREATOR | PEKSHA_RASANJANA ###
 © HELP ADMINS | YASIRU_DASANTHA ###
-
-
-
-
-
 </footer>
-<script>
-const searchInput = document.getElementById("searchInput");  // search box එකට link
-const movies = document.querySelectorAll(".movie");          // සියලු movie cards
 
-// Pagination settings
-const itemsPerPage = 10; // එක් page එකේ දැක්වන movie ගණන
+<!-- Popup Overlay -->
+<div id="movieDetails">
+  <span class="closeBtn">&times;</span>
+  <h3 id="detailTitle"></h3>
+  <p id="detailAction"></p>
+  <a href="#" id="detailLink" class="watch-btn">▶ Watch / Download</a>
+</div>
+
+<script>
+// Movie info
+const moviesInfo = [
+  {
+    title: "Ratatouille (2007)",
+    action: "Action | Sinhala",
+    link: "https://drive.google.com/file/d/1RnELa1HMU_B90srWoTE1woZCQRGAFI4n/view?usp=drivesdk"
+  },
+  {
+    title: "Soorya (2025)",
+    action: "Action | Sinhala",
+    link: "https://publicfiletolinkbotsvhshs-82bc20e41c1f.herokuapp.com/75658/Soorya.2025.720p.%40sinhalaaaa.mkv?hash=AgAD5h"
+  }
+  // add all movies here following same pattern
+];
+
+const movies = document.querySelectorAll(".movie");
+const details = document.getElementById("movieDetails");
+const closeBtn = document.querySelector("#movieDetails .closeBtn");
+const detailTitle = document.getElementById("detailTitle");
+const detailAction = document.getElementById("detailAction");
+const detailLink = document.getElementById("detailLink");
+
+// Click on movie to show overlay
+movies.forEach((card, index) => {
+  card.addEventListener("click", () => {
+    details.style.display = "flex";
+    detailTitle.innerText = moviesInfo[index].title;
+    detailAction.innerText = moviesInfo[index].action;
+    detailLink.href = moviesInfo[index].link;
+  });
+});
+
+// Close overlay
+closeBtn.addEventListener("click", () => {
+  details.style.display = "none";
+});
+
+// Search
+const searchInput = document.getElementById("searchInput");
+searchInput.addEventListener("keyup", function() {
+  const value = searchInput.value.toLowerCase();
+  movies.forEach((movie, index) => {
+    const title = movie.querySelector("h3").innerText.toLowerCase();
+    movie.style.display = title.includes(value) ? "block" : "none";
+  });
+});
+
+// Pagination
+const itemsPerPage = 10;
 let currentPage = 1;
 const totalPages = Math.ceil(movies.length / itemsPerPage);
-
 const prevBtn = document.getElementById("prevBtn");
 const nextBtn = document.getElementById("nextBtn");
 const pageInfo = document.getElementById("pageInfo");
@@ -567,42 +280,22 @@ const pageInfo = document.getElementById("pageInfo");
 function showPage(page) {
   const start = (page - 1) * itemsPerPage;
   const end = start + itemsPerPage;
-
   movies.forEach((movie, index) => {
     movie.style.display = (index >= start && index < end) ? "block" : "none";
   });
-
   pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
-
   prevBtn.disabled = currentPage === 1;
   nextBtn.disabled = currentPage === totalPages;
 }
-
-// Initial display
 showPage(currentPage);
 
-// Button click events
 prevBtn.addEventListener("click", () => {
-  if(currentPage > 1) {
-    currentPage--;
-    showPage(currentPage);
-  }
+  if(currentPage > 1) { currentPage--; showPage(currentPage); }
 });
-
 nextBtn.addEventListener("click", () => {
-  if(currentPage < totalPages) {
-    currentPage++;
-    showPage(currentPage);
-  }
-});
-
-// Search functionality
-searchInput.addEventListener("keyup", function () {
-  const value = searchInput.value.toLowerCase();
-  movies.forEach(movie => {
-    const title = movie.querySelector("h3").innerText.toLowerCase();
-    movie.style.display = title.includes(value) ? "block" : "none";
-  });
+  if(currentPage < totalPages) { currentPage++; showPage(currentPage); }
 });
 </script>
+
+</body>
 </html>
