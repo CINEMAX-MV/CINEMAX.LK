@@ -180,10 +180,64 @@ footer {
 
   <h2>Latest Movies</h2>
 
-  <div class="search-box">
-    <input type="text" placeholder="Search movies..." />
+<div class="search-box">
+  <input type="text" id="searchInput" placeholder="Search movies..." />
+</div>
+
+<div class="movies">  <!-- මේක අරම්භය -->
+
+  <div class="movie">
+    <h3>Ratatouille ( 2007 )</h3>
+    ...
   </div>
 
+  <div class="movie">
+    <h3>Soorya (2025)</h3>
+    ...
+  </div>
+
+  <div class="movie">
+    <h3>Jack And The Giant Slayer (2013)</h3>
+    ...
+  </div>
+
+  <div class="movie">
+    <h3>Jungle cruise (2021)</h3>
+    ...
+    </div>
+
+  <div class="movie">
+    <h3>The garfield movie (2004)</h3>
+    ...
+    </div>
+
+  <div class="movie">
+    <h3>Paulie (1998)</h3>
+    ...
+    </div>
+
+  <div class="movie">
+    <h3>Luck (2022)</h3>
+    ...
+    </div>
+  
+  <div class="movie">
+    <h3>Bee (2007)</h3>
+    ...
+    </div>
+
+  <div class="movie">
+    <h3>Tinkerbell (2008)</h3>
+    ...
+    </div>
+
+  <div class="movie">
+    <h3>Bridge to therabithia (2007)</h3>
+    ...
+    </div>
+
+</div> <!-- මේක අවසානය -->
+  
 <div class="movie">
   <span class="badge">HD</span>
   <img src="https://i.ibb.co/Q7BNQrqf/RD393437343037303731353740732e77686174736170702e6e6574-569238.jpg" alt="Ratatouille">
@@ -417,5 +471,17 @@ footer {
 
 </footer>
 
-</body>
+<script>
+const searchInput = document.getElementById("searchInput");  // search box එකට link
+const movies = document.querySelectorAll(".movie");          // සියලු movie cards
+
+searchInput.addEventListener("keyup", function () {          // key type කරන විට
+  const value = searchInput.value.toLowerCase();             // typed value small letters
+
+  movies.forEach(movie => {                                  // සියලු movie cards බලන්න
+    const title = movie.querySelector("h3").innerText.toLowerCase(); // movie title
+    movie.style.display = title.includes(value) ? "block" : "none"; // filter
+  });
+});
+</script>
 </html>
