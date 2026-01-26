@@ -555,12 +555,53 @@ footer {
 const searchInput = document.getElementById("searchInput");  // search box එකට link
 const movies = document.querySelectorAll(".movie");          // සියලු movie cards
 
-searchInput.addEventListener("keyup", function () {          // key type කරන විට
-  const value = searchInput.value.toLowerCase();             // typed value small letters
+// Pagination settings
+const itemsPerPage = 10; // එක් page එකේ දැක්වන movie ගණන
+let currentPage = 1;
+const totalPages = Math.ceil(movies.length / itemsPerPage);
 
-  movies.forEach(movie => {                                  // සියලු movie cards බලන්න
-    const title = movie.querySelector("h3").innerText.toLowerCase(); // movie title
-    movie.style.display = title.includes(value) ? "block" : "none"; // filter
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+const pageInfo = document.getElementById("pageInfo");
+
+function showPage(page) {
+  const start = (page - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
+
+  movies.forEach((movie, index) => {
+    movie.style.display = (index >= start && index < end) ? "block" : "none";
+  });
+
+  pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+
+  prevBtn.disabled = currentPage === 1;
+  nextBtn.disabled = currentPage === totalPages;
+}
+
+// Initial display
+showPage(currentPage);
+
+// Button click events
+prevBtn.addEventListener("click", () => {
+  if(currentPage > 1) {
+    currentPage--;
+    showPage(currentPage);
+  }
+});
+
+nextBtn.addEventListener("click", () => {
+  if(currentPage < totalPages) {
+    currentPage++;
+    showPage(currentPage);
+  }
+});
+
+// Search functionality
+searchInput.addEventListener("keyup", function () {
+  const value = searchInput.value.toLowerCase();
+  movies.forEach(movie => {
+    const title = movie.querySelector("h3").innerText.toLowerCase();
+    movie.style.display = title.includes(value) ? "block" : "none";
   });
 });
 </script>
