@@ -220,6 +220,7 @@ footer {
 <div class="search-box">
   <input type="text" id="searchInput" placeholder="Search movies..." />
 </div>
+  <div class="movies">
 
 <div class="movie">
   <span class="badge">HD</span>
@@ -563,5 +564,61 @@ searchInput.addEventListener("keyup", function () {          // key type කර�
     movie.style.display = title.includes(value) ? "block" : "none"; // filter
   });
 });
-</script>
+<script>
+let currentPage = 1;
+const moviesPerPage = 10;
+
+const searchInput = document.getElementById("searchInput");
+let allMovies = Array.from(document.querySelectorAll(".movie"));
+
+const pageInfo = document.getElementById("pageInfo");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+
+function showMovies(page, movieList = allMovies) {
+  const totalPages = Math.ceil(movieList.length / moviesPerPage);
+  const start = (page - 1) * moviesPerPage;
+  const end = start + moviesPerPage;
+
+  allMovies.forEach(movie => movie.style.display = "none");
+
+  movieList.slice(start, end).forEach(movie => {
+    movie.style.display = "block";
+  });
+
+  pageInfo.textContent = `Page ${page} of ${totalPages}`;
+  prevBtn.disabled = page === 1;
+  nextBtn.disabled = page === totalPages;
+}
+
+// Pagination buttons
+prevBtn.onclick = () => {
+  if (currentPage > 1) {
+    currentPage--;
+    showMovies(currentPage);
+  }
+};
+
+nextBtn.onclick = () => {
+  const totalPages = Math.ceil(allMovies.length / moviesPerPage);
+  if (currentPage < totalPages) {
+    currentPage++;
+    showMovies(currentPage);
+  }
+};
+
+// Search
+searchInput.addEventListener("keyup", () => {
+  const value = searchInput.value.toLowerCase();
+
+  const filteredMovies = allMovies.filter(movie =>
+    movie.querySelector("h3").innerText.toLowerCase().includes(value)
+  );
+
+  currentPage = 1;
+  showMovies(currentPage, filteredMovies);
+});
+
+// First load
+showMovies(currentPage);
 </html>
