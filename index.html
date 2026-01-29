@@ -120,7 +120,7 @@ footer {
 <header class="topbar">
   <div class="logo">CINEMAX</div>
   <nav>
-    <p>👁 Site Views: <span id="viewCount">Loading...</span></p>
+    <p>💃Views: <span id="viewCount">Loading...</span></p>
     <a href="home.html">Home</a>
     <a href="#">Latest</a>
     <a href="#">Genres</a>
@@ -831,23 +831,14 @@ document.querySelectorAll(".movie img").forEach(img => {
 });
 </script>
 <body>
-  <h1>Welcome to Cinemax</h1>
-  
-  <!-- Visitor Count Section -->
-  <p>Total visitors: <span id="viewCount">Loading...</span></p>
 
+  <!-- Script එක body අවසානයේ දාන්න -->
   <script>
-    fetch('https://api.countapi.xyz/hit/cinemax-lk.vercel.app/visits')
-      .then(response => response.json())
-      .then(data => {
-        document.getElementById('viewCount').innerText = data.value;
-      })
-      .catch(error => {
-        console.error('Error fetching count:', error);
-        document.getElementById('viewCount').innerText = 'N/A';
-      });
+    let count = localStorage.getItem('cinemaxViews'); // previous count
+    if(!count) count = 0; // first time visit
+    count++; // increment
+    localStorage.setItem('cinemaxViews', count); // save back
+    document.getElementById('viewCount').innerText = count;
   </script>
-  
-  <p>Enjoy our movies!</p>
 </body>
   </html>
