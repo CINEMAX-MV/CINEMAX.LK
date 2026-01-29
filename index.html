@@ -836,12 +836,13 @@ document.querySelectorAll(".movie img").forEach(img => {
     });
   });
 });
-  <script>
+<script>
 fetch("https://api.countapi.xyz/hit/cinemax-lk/siteviews")
   .then(response => response.json())
   .then(data => {
     document.getElementById("viewCount").innerText = data.value;
-  });
+  })
+  .catch(err => console.log("Error fetching views:", err));
 </script>
 
 </body>
