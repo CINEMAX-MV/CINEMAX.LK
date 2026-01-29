@@ -834,14 +834,15 @@ document.querySelectorAll(".movie img").forEach(img => {
 </body>
       <script>
 document.addEventListener("DOMContentLoaded", function () {
-  fetch("https://api.countapi.xyz/hit/cinemax.lk/visits")
+  fetch("https://api.countapi.xyz/hit/cinemax-lk.vercel.app/visits")
     .then(res => res.json())
     .then(data => {
       document.getElementById("viewCount").innerText = data.value;
     })
-    .catch(() => {
+    .catch(err => {
+      console.error(err);
       document.getElementById("viewCount").innerText = "0";
     });
 });
-      </script>
+</script>
   </html>
