@@ -898,6 +898,16 @@ document.querySelectorAll(".movie img").forEach(img => {
 </div>
 
 <style>
+<!-- Overlay Start -->
+<div id="overlay">
+  <div class="overlay-content">
+    <h2>🎬 CINEMAX Movies බලන්න ඔයාට අපේ WhatsApp Channel follow කරන්න ඕනෙ!</h2>
+    <p>අලුත්ම සිංහල Movies, HD links, සහ updates එකතුව මෙතනින්.</p>
+    <a href="https://whatsapp.com/channel/0029VbCQwiiAzNbtleGlQS1r" target="_blank" class="whatsapp-btn" id="followBtn">Follow Channel</a>
+  </div>
+</div>
+
+<style>
 #overlay {
   position: fixed;
   top: 0;
@@ -961,7 +971,7 @@ document.querySelectorAll(".movie img").forEach(img => {
   box-shadow: 0 10px 25px rgba(37,211,102,0.6);
 }
 
-/* Blur the page content behind overlay */
+/* Blur page content behind overlay */
 body > *:not(#overlay) {
   filter: blur(8px);
   transition: filter 0.5s ease;
@@ -980,19 +990,25 @@ body > *:not(#overlay) {
 </style>
 
 <script>
-function unlockContent() {
-  // Open WhatsApp channel in new tab
-  window.open(
-    "https://whatsapp.com/channel/0029VbCQwiiAzNbtleGlQS1r",
-    "_blank"
-  );
-  // Hide overlay
-  document.getElementById("overlay").style.display = "none";
-
-  // Remove blur from all page content
-  document.querySelectorAll('body > *:not(#overlay)').forEach(el => {
-    el.style.filter = "none";
-  });
+// Check if user already followed (saved in localStorage)
+if(localStorage.getItem('whatsappFollowed') === 'true'){
+    document.getElementById('overlay').style.display = 'none';
+    document.querySelectorAll('body > *:not(#overlay)').forEach(el => el.style.filter = "none");
 }
+
+// Follow button click
+document.getElementById('followBtn').addEventListener('click', function(){
+    // Mark as followed
+    localStorage.setItem('whatsappFollowed','true');
+
+    // Hide overlay
+    document.getElementById('overlay').style.display = 'none';
+
+    // Remove blur from page content
+    document.querySelectorAll('body > *:not(#overlay)').forEach(el => el.style.filter = "none");
+
+    // Open WhatsApp channel in new tab
+    window.open(this.href, "_blank");
+});
 </script>
 </html>
