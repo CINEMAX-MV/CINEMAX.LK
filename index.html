@@ -890,41 +890,72 @@ document.querySelectorAll(".movie img").forEach(img => {
 </body>
 <!-- Overlay Section -->
 <div id="overlay">
-  <h2>Before accessing CINEMAX movies,<br>please follow our WhatsApp channel!</h2>
-  <button id="overlayButton">Follow on WhatsApp</button>
+  <div class="overlay-bg"></div> <!-- background effects -->
+  <div class="overlay-content">
+    <div class="text-box">
+      <h2>Before accessing CINEMAX movies,<br>please follow our WhatsApp channel!</h2>
+    </div>
+    <button id="overlayButton">Follow on WhatsApp</button>
+  </div>
 </div>
 
 <style>
-  /* Overlay styling */
+  /* Overlay main */
   #overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #0f0f0f, #1c1c1c, #e50914);
-    color: #fff;
+    z-index: 9999;
+    overflow: hidden;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    z-index: 9999;
+    font-family: 'Arial', sans-serif;
+  }
+
+  /* Background effects */
+  .overlay-bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url('https://images.unsplash.com/photo-1581093588401-91c981a6f1f2?auto=format&fit=crop&w=1950&q=80') no-repeat center center/cover;
+    filter: brightness(0.3) blur(5px);
+    z-index: 1;
+  }
+
+  /* Overlay content */
+  .overlay-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
     padding: 20px;
-    backdrop-filter: blur(5px);
-    animation: fadeIn 0.5s ease;
   }
 
-  #overlay h2 {
-    font-size: 28px;
-    max-width: 450px;
-    line-height: 1.5;
+  /* Glassmorphism text box */
+  .text-box {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    padding: 30px 40px;
     margin-bottom: 40px;
-    font-weight: 600;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5);
   }
 
-  #overlay button {
+  .text-box h2 {
+    color: #fff;
+    font-size: 28px;
+    line-height: 1.5;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+  }
+
+  /* WhatsApp Button */
+  #overlayButton {
     background: #25D366;
     color: #fff;
     font-size: 20px;
@@ -937,16 +968,10 @@ document.querySelectorAll(".movie img").forEach(img => {
     box-shadow: 0 5px 20px rgba(0,0,0,0.4);
   }
 
-  #overlay button:hover {
+  #overlayButton:hover {
     background: #1ebe57;
     transform: scale(1.05);
     box-shadow: 0 8px 25px rgba(0,0,0,0.5);
-  }
-
-  /* Fade-in animation */
-  @keyframes fadeIn {
-    0% { opacity: 0; transform: scale(0.95); }
-    100% { opacity: 1; transform: scale(1); }
   }
 
   /* Blur content behind overlay */
@@ -955,29 +980,28 @@ document.querySelectorAll(".movie img").forEach(img => {
     transition: filter 0.5s ease;
   }
 
-  /* Responsive text */
-  @media (max-width: 600px) {
-    #overlay h2 {
-      font-size: 22px;
-      margin-bottom: 30px;
-    }
+  /* Fade-in overlay animation */
+  #overlay {
+    animation: fadeIn 0.5s ease;
+  }
+  @keyframes fadeIn {
+    0% { opacity: 0; transform: scale(0.97); }
+    100% { opacity: 1; transform: scale(1); }
+  }
 
-    #overlay button {
-      font-size: 18px;
-      padding: 14px 32px;
-    }
+  /* Responsive */
+  @media (max-width: 600px) {
+    .text-box h2 { font-size: 22px; }
+    #overlayButton { font-size: 18px; padding: 14px 32px; }
   }
 </style>
 
 <script>
 document.getElementById('overlayButton').addEventListener('click', function() {
-    // Open WhatsApp in new tab
     window.open('https://whatsapp.com/channel/0029VbCQwiiAzNbtleGlQS1r', '_blank');
 
-    // Hide overlay
     document.getElementById('overlay').style.display = 'none';
 
-    // Remove blur from content
     document.querySelectorAll('body > *:not(#overlay)').forEach(el => {
         el.style.filter = 'none';
     });
