@@ -113,6 +113,11 @@ footer {
 .movie a {
   display: none;
 }
+
+  body > *:not(#overlay) {
+  filter: blur(8px);
+  transition: filter 0.5s ease;
+            }
 </style>
 </head>
 <body>
@@ -842,4 +847,23 @@ document.querySelectorAll(".movie img").forEach(img => {
 </script>
 
 </body>
+      <div id="overlay">
+  <h2>Join our WhatsApp channel to continue</h2>
+  <button onclick="unlockContent()">Join Now</button>
+</div>
+
+<script>
+function unlockContent() {
+  window.open(
+    "https://whatsapp.com/channel/0029VbCQwiiAzNbtleGlQS1r",
+    "_blank"
+  );
+  document.getElementById("overlay").style.display = "none";
+
+  // Remove blur from everything except overlay
+  document.querySelectorAll('body > *:not(#overlay)').forEach(el => {
+    el.style.filter = "none";
+  });
+}
+                                                              </script>
 </html>
