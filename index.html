@@ -120,6 +120,14 @@ footer {
 <header class="topbar">
   <div class="logo">CINEMAX</div>
   <nav>
+    <div style="
+  text-align:center;
+  font-size:13px;
+  color:#ccc;
+  margin-top:6px;
+">
+  👁️ Site Views: <span id="viewCount">Loading...</span>
+    </div>
     <a href="home.html">Home</a>
     <a href="#">Latest</a>
     <a href="#">Genres</a>
@@ -828,6 +836,12 @@ document.querySelectorAll(".movie img").forEach(img => {
     });
   });
 });
+  <script>
+fetch("https://api.countapi.xyz/hit/cinemax-lk/siteviews")
+  .then(response => response.json())
+  .then(data => {
+    document.getElementById("viewCount").innerText = data.value;
+  });
 </script>
 
 </body>
