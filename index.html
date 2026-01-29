@@ -837,13 +837,41 @@ document.querySelectorAll(".movie img").forEach(img => {
   });
 });
 <script>
-fetch("https://api.countapi.xyz/hit/cinemax-lk/siteviews")
-  .then(response => response.json())
-  .then(data => {
-    document.getElementById("viewCount").innerText = data.value;
-  })
-  .catch(err => console.log("Error fetching views:", err));
+  const counterKey = "cinemax-lk-views";
+
+  fetch("https://api.countapi.xyz/hit/cinemax.lk/" + counterKey)
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById("viewCount").innerText = data.value;
+    })
+    .catch(() => {
+      document.getElementById("viewCount").innerText = "N/A";
+    });
+</script>
+</body>
+      </div> <!-- container end -->
+
+<footer>
+  <p>© 2025 CINEMAX</p>
+</footer>
+
+<!-- 👉 මෙතන paste කරන්න -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const counterKey = "cinemax-lk-views";
+
+  fetch("https://api.countapi.xyz/hit/cinemax.lk/" + counterKey)
+    .then(res => res.json())
+    .then(data => {
+      const el = document.getElementById("viewCount");
+      if (el) el.innerText = data.value;
+    })
+    .catch(() => {
+      const el = document.getElementById("viewCount");
+      if (el) el.innerText = "N/A";
+    });
+});
 </script>
 
 </body>
-</html>
+    </html>
