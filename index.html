@@ -831,17 +831,17 @@ document.querySelectorAll(".movie img").forEach(img => {
 });
 </script>
 
+<body>
+
+  ... ඔයාගේ site content ...
+
+  <!-- Script එක body අවසානයේ දාන්න -->
+  <script>
+    let count = localStorage.getItem('cinemaxViews'); // previous count
+    if(!count) count = 0; // first time visit
+    count++; // increment
+    localStorage.setItem('cinemaxViews', count); // save back
+    document.getElementById('viewCount').innerText = count;
+  </script>
 </body>
-      <script>
-document.addEventListener("DOMContentLoaded", function () {
-  fetch("https://api.countapi.xyz/update/cinemax-lk.vercel.app/visits?amount=1")
-    .then(res => res.json())
-    .then(data => {
-      document.getElementById("viewCount").innerText = data.value;
-    })
-    .catch(() => {
-      document.getElementById("viewCount").innerText = "N/A";
-    });
-});
-</script>
   </html>
