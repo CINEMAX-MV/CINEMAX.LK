@@ -120,6 +120,7 @@ footer {
 <header class="topbar">
   <div class="logo">CINEMAX</div>
   <nav>
+    <p>👁 Site Views: <span id="viewCount">Loading...</span></p>
     <a href="home.html">Home</a>
     <a href="#">Latest</a>
     <a href="#">Genres</a>
@@ -831,4 +832,16 @@ document.querySelectorAll(".movie img").forEach(img => {
 </script>
 
 </body>
+      <script>
+document.addEventListener("DOMContentLoaded", function () {
+  fetch("https://api.countapi.xyz/hit/cinemax.lk/visits")
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById("viewCount").innerText = data.value;
+    })
+    .catch(() => {
+      document.getElementById("viewCount").innerText = "0";
+    });
+});
+      </script>
   </html>
