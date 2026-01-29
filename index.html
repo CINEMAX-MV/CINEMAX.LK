@@ -385,10 +385,71 @@ footer {
 <!-- Movie Cards End -->
 
   <div id="pagination">
-    <button id="prevBtn"><<< Prev</button>
+    <button id="prevBtn">⬅ Prev</button>
     <span id="pageInfo"></span>
-    <button id="nextBtn">Next >>></button>
+    <button id="nextBtn">Next ➡</button>
 </div>
+
+<style>
+#pagination {
+  text-align: center;
+  margin: 35px 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+#pagination button {
+  background: linear-gradient(120deg, #e50914, #ff1f2d);
+  color: #fff;
+  border: none;
+  padding: 10px 22px;
+  margin: 0 8px;
+  border-radius: 30px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(229,9,20,0.6);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+#pagination button:hover {
+  background: linear-gradient(120deg, #ff1f2d, #e50914);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(229,9,20,0.8);
+}
+
+#pagination button::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 50%;
+}
+
+#pagination button:hover::after {
+  opacity: 1;
+}
+
+#pagination button:disabled {
+  background: #555;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+#pageInfo {
+  font-size: 15px;
+  color: #ccc;
+  font-weight: 500;
+  margin: 0 12px;
+}
+</style>
 
 </div>
 
