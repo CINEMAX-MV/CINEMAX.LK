@@ -108,6 +108,11 @@ footer {
   margin-left: 18px;
   font-size: 14px;
 }
+
+  .movie p,
+.movie a {
+  display: none;
+}
 </style>
 </head>
 <body>
@@ -476,11 +481,11 @@ footer {
 <footer>
 © 2026 CINEMAX | Sinhala Movie Website<br>
 </footer>
-
 <script>
 const searchInput = document.getElementById("searchInput");
 const movies = document.querySelectorAll(".movie");
 
+/* search code */
 searchInput.addEventListener("keyup", function () {
   const value = searchInput.value.toLowerCase();
   movies.forEach(movie => {
@@ -489,6 +494,7 @@ searchInput.addEventListener("keyup", function () {
   });
 });
 
+/* pagination code */
 const itemsPerPage = 12;
 let currentPage = 1;
 const totalPages = Math.ceil(movies.length / itemsPerPage);
@@ -509,8 +515,31 @@ function showPage(page) {
 }
 showPage(currentPage);
 
-prevBtn.addEventListener("click", () => { if(currentPage>1){ currentPage--; showPage(currentPage); } });
-nextBtn.addEventListener("click", () => { if(currentPage<totalPages){ currentPage++; showPage(currentPage); } });
+prevBtn.addEventListener("click", () => {
+  if (currentPage > 1) {
+    currentPage--;
+    showPage(currentPage);
+  }
+});
+nextBtn.addEventListener("click", () => {
+  if (currentPage < totalPages) {
+    currentPage++;
+    showPage(currentPage);
+  }
+});
+
+/* ✅ IMAGE CLICK SHOW / HIDE (ADD THIS PART) */
+document.querySelectorAll(".movie img").forEach(img => {
+  img.addEventListener("click", () => {
+    const movie = img.closest(".movie");
+    const info = movie.querySelectorAll("p, a");
+
+    info.forEach(el => {
+      el.style.display =
+        el.style.display === "block" ? "none" : "block";
+    });
+  });
+});
 </script>
 
 </body>
