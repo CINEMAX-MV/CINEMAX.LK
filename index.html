@@ -839,6 +839,71 @@ document.querySelectorAll(".movie img").forEach(img => {
     count++; // increment
     localStorage.setItem('cinemaxViews', count); // save back
     document.getElementById('viewCount').innerText = count;
-  </script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WhatsApp Soft Gate Example</title>
+<style>
+  /* Container with blur */
+  #content {
+    filter: blur(8px);
+    transition: filter 0.5s ease;
+    padding: 20px;
+    background: #f5f5f5;
+  }
+
+  /* Overlay */
+  #overlay {
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: rgba(0,0,0,0.6);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+    flex-direction: column;
+    text-align:center;
+    z-index:9999;
+  }
+
+  #overlay button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    font-size:16px;
+    cursor:pointer;
+    border:none;
+    border-radius:5px;
+    background:#25D366; /* WhatsApp green */
+    color:white;
+  }
+</style>
+</head>
+<body>
+
+<div id="overlay">
+  <h2>Join our WhatsApp channel to unlock content!</h2>
+  <button onclick="unlockContent()">Join Now</button>
+</div>
+
+<div id="content">
+  <h1>Welcome to Cinemax!</h1>
+  <p>This is your main content. It will be fully visible after clicking the WhatsApp button above.</p>
+  <p>Movies, updates, and more await you here!</p>
+</div>
+
+<script>
+function unlockContent(){
+  // Clear the overlay
+  document.getElementById('overlay').style.display = 'none';
+  // Remove blur
+  document.getElementById('content').style.filter = 'none';
+}
+</script>
+
 </body>
-  </html>
+</html>
