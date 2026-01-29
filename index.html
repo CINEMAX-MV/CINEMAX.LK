@@ -120,14 +120,6 @@ footer {
 <header class="topbar">
   <div class="logo">CINEMAX</div>
   <nav>
-    <div style="
-  text-align:center;
-  font-size:13px;
-  color:#ccc;
-  margin-top:6px;
-">
-  👁️ Site Views: <span id="viewCount">Loading...</span>
-    </div>
     <a href="home.html">Home</a>
     <a href="#">Latest</a>
     <a href="#">Genres</a>
@@ -836,42 +828,7 @@ document.querySelectorAll(".movie img").forEach(img => {
     });
   });
 });
-<script>
-  const counterKey = "cinemax-lk-views";
-
-  fetch("https://api.countapi.xyz/hit/cinemax.lk/" + counterKey)
-    .then(res => res.json())
-    .then(data => {
-      document.getElementById("viewCount").innerText = data.value;
-    })
-    .catch(() => {
-      document.getElementById("viewCount").innerText = "N/A";
-    });
-</script>
-</body>
-      </div> <!-- container end -->
-
-<footer>
-  <p>© 2025 CINEMAX</p>
-</footer>
-
-<!-- 👉 මෙතන paste කරන්න -->
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const counterKey = "cinemax-lk-views";
-
-  fetch("https://api.countapi.xyz/hit/cinemax.lk/" + counterKey)
-    .then(res => res.json())
-    .then(data => {
-      const el = document.getElementById("viewCount");
-      if (el) el.innerText = data.value;
-    })
-    .catch(() => {
-      const el = document.getElementById("viewCount");
-      if (el) el.innerText = "N/A";
-    });
-});
 </script>
 
 </body>
-    </html>
+  </html>
