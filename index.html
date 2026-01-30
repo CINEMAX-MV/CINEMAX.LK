@@ -1603,65 +1603,138 @@ body::before{
 }
 
 @keyframes popIn{
-  0%{transform:scale(.8);opacity:0}
-  100%{transform:scale(1);opacity:1}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CINEMAX Movies</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #0f0f0f;
+  color: #fff;
+  overflow-x: hidden;
 }
 
-#overlay h2{
-  font-size:28px;
-  font-weight:700;
-  margin-bottom:30px;
-  text-shadow:0 0 20px #e50914,0 0 40px #e50914;
-  animation:textGlow 2s infinite alternate;
+/* Cinematic background */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url('https://i.ibb.co/ZYW3VTp/brown-brim.png') center/cover no-repeat;
+  opacity: 0.05;
+  z-index: -2;
+  animation: floatBackground 60s linear infinite;
 }
 
-@keyframes textGlow{
-  0%{text-shadow:0 0 10px #e50914,0 0 20px #ff1f2d}
-  100%{text-shadow:0 0 20px #ff1f2d,0 0 40px #e50914}
+@keyframes floatBackground {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-50px); }
+  100% { transform: translateY(0px); }
 }
 
-#overlay button{
-  background:linear-gradient(45deg,#e50914,#ff1f2d);
-  border:none;
-  padding:18px 40px;
-  font-size:18px;
-  font-weight:700;
-  color:#fff;
-  border-radius:50px;
-  cursor:pointer;
-  transition:.3s;
-  box-shadow:0 0 20px #e50914,0 0 40px #ff1f2d;
+/* Sparkles */
+.sparkle {
+  position: absolute;
+  width: 4px; height: 4px;
+  background: rgba(255,255,255,0.9);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: sparkleAnim 3s linear infinite;
 }
 
-#overlay button:hover{
-  transform:scale(1.05);
-  box-shadow:0 0 30px #ff1f2d,0 0 60px #e50914;
+@keyframes sparkleAnim {
+  0% { transform: translateY(0) scale(0.5); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateY(-300px) scale(1.2); opacity: 0; }
 }
 
-/* Film reels */
-.reel{
-  position:absolute;
-  width:80px;
-  height:80px;
-  border:3px solid rgba(255,255,255,.3);
-  border-radius:50%;
-  box-shadow:0 0 20px rgba(255,255,255,.4);
-  animation:reelMove linear infinite;
+/* Overlay */
+#overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(10px);
+  z-index: 9999;
+  text-align: center;
+  overflow: hidden;
 }
 
-@keyframes reelMove{
-  0%{transform:translateY(100vh) rotate(0)}
-  100%{transform:translateY(-100vh) rotate(360deg)}
+/* Glass box centered */
+.glass-box {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 25px;
+  padding: 50px 40px;
+  max-width: 500px;
+  animation: popIn 1s ease forwards;
+  box-shadow: 0 0 60px rgba(229,9,20,0.6);
+}
+
+@keyframes popIn {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+#overlay h2 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  text-shadow: 0 0 20px #e50914, 0 0 40px #e50914;
+  animation: textGlow 2s infinite alternate;
+}
+
+@keyframes textGlow {
+  0% { text-shadow: 0 0 10px #e50914, 0 0 20px #ff1f2d; }
+  100% { text-shadow: 0 0 20px #ff1f2d, 0 0 40px #e50914; }
+}
+
+#overlay button {
+  background: linear-gradient(45deg,#e50914,#ff1f2d);
+  border: none;
+  padding: 18px 40px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 0 20px #e50914, 0 0 40px #ff1f2d;
+}
+
+#overlay button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px #ff1f2d, 0 0 60px #e50914;
+}
+
+/* Floating reels */
+.reel {
+  position: absolute;
+  width: 80px; height: 80px;
+  border: 3px solid rgba(255,255,255,0.3);
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(255,255,255,0.4);
+  animation: reelMove linear infinite;
+}
+
+@keyframes reelMove {
+  0% { transform: translateY(100vh) rotate(0deg); }
+  100% { transform: translateY(-100vh) rotate(360deg); }
 }
 
 /* Blur background content */
-body > *:not(#overlay){
-  filter:blur(12px);
-  transition:.5s;
+body > *:not(#overlay) {
+  filter: blur(12px);
+  transition: filter 0.5s ease;
 }
 </style>
 </head>
-
 <body>
 
 <!-- Overlay -->
@@ -1671,16 +1744,17 @@ body > *:not(#overlay){
     <button id="overlayButton">Follow on WhatsApp</button>
   </div>
 
-  <div class="reel" style="left:10%;animation-duration:25s;"></div>
-  <div class="reel" style="left:30%;animation-duration:30s;"></div>
-  <div class="reel" style="left:50%;animation-duration:28s;"></div>
-  <div class="reel" style="left:70%;animation-duration:32s;"></div>
-  <div class="reel" style="left:90%;animation-duration:27s;"></div>
+  <div class="reel" style="left:10%; animation-duration:25s;"></div>
+  <div class="reel" style="left:30%; animation-duration:30s;"></div>
+  <div class="reel" style="left:50%; animation-duration:28s;"></div>
+  <div class="reel" style="left:70%; animation-duration:32s;"></div>
+  <div class="reel" style="left:90%; animation-duration:27s;"></div>
 </div>
 
 <script>
+// 30-minute cooldown
 const OVERLAY_KEY = "cinemax_follow_time";
-const COOLDOWN = 30 * 60 * 1000; // 30 minutes
+const COOLDOWN = 30 * 60 * 1000;
 
 const overlay = document.getElementById("overlay");
 const button = document.getElementById("overlayButton");
@@ -1691,15 +1765,15 @@ function canShowOverlay(){
   return (Date.now() - lastTime) > COOLDOWN;
 }
 
-/* Page load */
+// On page load
 if(!canShowOverlay()){
-  overlay.style.display="none";
+  overlay.style.display = "none";
   document.querySelectorAll('body > *:not(#overlay)').forEach(el=>{
-    el.style.filter="none";
+    el.style.filter = "none";
   });
 }
 
-/* Sparkles */
+// Sparkles
 for(let i=0;i<40;i++){
   let s=document.createElement('div');
   s.className='sparkle';
@@ -1709,18 +1783,13 @@ for(let i=0;i<40;i++){
   overlay.appendChild(s);
 }
 
-/* Button click */
+// Button click
 button.addEventListener("click",()=>{
-  window.open(
-    "https://whatsapp.com/channel/0029VbCQwiiAzNbtleGlQS1r",
-    "_blank"
-  );
-
+  window.open("https://whatsapp.com/channel/0029VbCQwiiAzNbtleGlQS1r","_blank");
   localStorage.setItem(OVERLAY_KEY, Date.now());
-
-  overlay.style.display="none";
+  overlay.style.display = "none";
   document.querySelectorAll('body > *:not(#overlay)').forEach(el=>{
-    el.style.filter="none";
+    el.style.filter = "none";
   });
 });
 </script>
