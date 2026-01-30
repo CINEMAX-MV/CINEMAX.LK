@@ -1172,42 +1172,142 @@ body::before{
   position:relative;
 }
 
-.glass-box h2 span::after{
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CINEMAX Movies</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'Poppins',sans-serif;
+  background:#0f0f0f;
+  color:#fff;
+  overflow-x:hidden;
+}
+
+/* subtle grain */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:url("https://grainy-gradients.vercel.app/noise.svg");
+  opacity:0.08;
+  z-index:-2;
+}
+
+/* ===== Overlay ===== */
+#overlay{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,0,0,0.85);
+  backdrop-filter:blur(10px);
+  z-index:9999;
+  overflow:hidden;
+}
+
+/* vignette */
+#overlay::before{
   content:"";
   position:absolute;
-  left:0;
-  bottom:-10px;
+  inset:0;
+  background:radial-gradient(circle at center,transparent 40%,rgba(0,0,0,0.7));
+}
+
+/* ===== Glass Box ===== */
+.glass-box{
+  position:relative;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.18);
+  border-radius:24px;
+  padding:48px 40px;
+  max-width:500px;
+  text-align:center;
+  backdrop-filter:blur(14px);
+  box-shadow:0 40px 120px rgba(0,0,0,0.9);
+  animation:fadeUp .9s ease;
+}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(25px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* animated border sweep */
+.glass-box::before{
+  content:"";
+  position:absolute;
+  inset:-1px;
+  border-radius:24px;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,0.35),transparent);
+  background-size:200%;
+  animation:borderSweep 6s linear infinite;
+  pointer-events:none;
+}
+
+@keyframes borderSweep{
+  from{background-position:0%}
+  to{background-position:200%}
+}
+
+/* light sweep */
+.glass-box::after{
+  content:"";
+  position:absolute;
+  top:0;left:-100%;
+  width:50%;height:100%;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,0.08),transparent);
+  animation:lightSweep 8s ease-in-out infinite;
+  pointer-events:none;
+}
+
+@keyframes lightSweep{
+  0%{transform:translateX(-100%)}
+  100%{transform:translateX(200%)}
+}
+
+/* ===== Text ===== */
+.glass-box h2{
+  font-size:26px;
+  font-weight:700;
+  line-height:1.4;
+  margin-bottom:28px;
+}
+
+/* underline animation */
+.glass-box h2::after{
+  content:"";
+  display:block;
   width:0;
   height:3px;
   background:#e50914;
-  animation:lineGrow 1.4s ease forwards;
+  margin:12px auto 0;
+  animation:lineGrow 1.3s ease forwards;
 }
 
 @keyframes lineGrow{
-  to{width:100%}
-}
-
-/* Info box */
-.notice{
-  background:rgba(0,0,0,0.55);
-  border:1px solid rgba(255,255,255,0.12);
-  padding:14px 16px;
-  border-radius:12px;
-  font-size:14px;
-  line-height:1.6;
-  text-align:center;
-  margin-bottom:30px;
-  color:#ddd;
+  to{width:70%}
 }
 
 /* ===== Button ===== */
 #overlayButton{
-  width:100%;
-  padding:16px;
+  padding:16px 40px;
   font-size:16px;
   font-weight:700;
   border:none;
-  border-radius:14px;
+  border-radius:50px;
   cursor:pointer;
   background:#25D366;
   color:#111;
@@ -1221,7 +1321,7 @@ body::before{
   background:#1fb858;
 }
 
-/* Ripple */
+/* ripple */
 #overlayButton::after{
   content:"";
   position:absolute;
@@ -1254,7 +1354,7 @@ body::before{
   to{transform:translateY(-120vh) rotate(360deg)}
 }
 
-/* Blur background content */
+/* blur page */
 body > *:not(#overlay){
   filter:blur(12px);
   transition:.5s;
@@ -1264,19 +1364,14 @@ body > *:not(#overlay){
 
 <body>
 
-<!-- ===== Overlay ===== -->
+<!-- Overlay Section -->
 <div id="overlay">
   <div class="glass-box">
-    <h2><span>Follow our WhatsApp Channel<br>to access CINEMAX Movies</span></h2>
-
-    <div class="notice">
-      Exclusive Sinhala movies are unlocked only for our WhatsApp community.
-    </div>
-
+    <h2>🎬 Before accessing CINEMAX movies,<br>follow our WhatsApp channel!</h2>
     <button id="overlayButton">Follow on WhatsApp</button>
   </div>
 
-  <div class="reel" style="left:10%;animation-duration:26s"></div>
+  <div class="reel" style="left:10%;animation-duration:25s"></div>
   <div class="reel" style="left:30%;animation-duration:30s"></div>
   <div class="reel" style="left:50%;animation-duration:28s"></div>
   <div class="reel" style="left:70%;animation-duration:32s"></div>
@@ -1284,31 +1379,34 @@ body > *:not(#overlay){
 </div>
 
 <script>
-const KEY = "cinemax_follow_time";
+const OVERLAY_KEY = "cinemax_follow_time";
 const COOLDOWN = 30 * 60 * 1000;
 
 const overlay = document.getElementById("overlay");
-const btn = document.getElementById("overlayButton");
+const button = document.getElementById("overlayButton");
 
-function showOverlay(){
-  const last = localStorage.getItem(KEY);
-  if(!last) return true;
-  return Date.now() - last > COOLDOWN;
+function canShowOverlay(){
+  const lastTime = localStorage.getItem(OVERLAY_KEY);
+  if(!lastTime) return true;
+  return (Date.now() - lastTime) > COOLDOWN;
 }
 
-if(!showOverlay()){
+if(!canShowOverlay()){
   overlay.style.display="none";
-  document.querySelectorAll("body > *:not(#overlay)").forEach(e=>{
-    e.style.filter="none";
+  document.querySelectorAll('body > *:not(#overlay)').forEach(el=>{
+    el.style.filter="none";
   });
 }
 
-btn.addEventListener("click",()=>{
-  window.open("https://whatsapp.com/channel/0029VbCQwiiAzNbtleGlQS1r","_blank");
-  localStorage.setItem(KEY,Date.now());
+button.addEventListener("click",()=>{
+  window.open(
+    "https://whatsapp.com/channel/0029VbCQwiiAzNbtleGlQS1r",
+    "_blank"
+  );
+  localStorage.setItem(OVERLAY_KEY,Date.now());
   overlay.style.display="none";
-  document.querySelectorAll("body > *:not(#overlay)").forEach(e=>{
-    e.style.filter="none";
+  document.querySelectorAll('body > *:not(#overlay)').forEach(el=>{
+    el.style.filter="none";
   });
 });
 </script>
