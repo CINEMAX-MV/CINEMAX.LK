@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Movies</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0f0f0f;
+      color: white;
+    }
+
+    header {
+      background: #111;
+      padding: 15px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      color: #00ffd5;
+    }
+
+    .movies {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 15px;
+      padding: 20px;
+    }
+
+    .movie-card {
+      background: #1c1c1c;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform 0.2s;
+      cursor: pointer;
+    }
+
+    .movie-card:hover {
+      transform: scale(1.05);
+    }
+
+    .movie-card img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+    }
+
+    .movie-info {
+      padding: 10px;
+    }
+
+    .movie-info h3 {
+      font-size: 14px;
+      margin: 0 0 5px;
+    }
+
+    .movie-info p {
+      font-size: 12px;
+      color: #aaa;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+
+<header>🎬 My Movie Collection</header>
+
+<div class="movies" id="movieContainer">
+  Loading movies...
+</div>
+
+<script>
+  // 🔁 මෙතන ඔයාගේ API URL එක දාන්න
+  const API_URL = "Piratelk.com https://share.google/tGTn8NZYVeqnLewyW";
+
+  fetch(API_URL)
+    .then(res => res.json())
+    .then(movies => {
+      const container = document.getElementById("movieContainer");
+      container.innerHTML = "";
+
+      movies.forEach(movie => {
+        const card = document.createElement("div");
+        card.className = "movie-card";
+
+        card.innerHTML = `
+          <img src="${movie.poster}" alt="${movie.title}">
+          <div class="movie-info">
+            <h3>${movie.title}</h3>
+            <p>⭐ ${movie.rating}</p>
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+    })
+    .catch(err => {
+      document.getElementById("movieContainer").innerHTML = "Failed to load movies.";
+      console.error(err);
+    });
+</script>
+
+</body>
+</html>
