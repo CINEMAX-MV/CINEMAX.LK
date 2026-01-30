@@ -113,30 +113,29 @@ footer {
 .movie a {
   display: none;
 }
-
-  /* MOBILE VIEW – banner smaller */
+/* MOBILE OPTIMIZATION */
 @media (max-width: 768px) {
 
-  .follow-banner {
-    max-width: 300px;   /* banner width */
-    padding: 14px;
-    border-radius: 14px;
+  #overlay .glass-box {
+    max-width: 300px;     /* banner width mobile */
+    padding: 25px 20px;   /* reduce padding */
+    border-radius: 18px;
   }
 
-  .follow-banner h2,
-  .follow-banner h1 {
-    font-size: 15px;
-    line-height: 1.4;
+  #overlay h2 {
+    font-size: 16px;      /* text smaller */
+    margin-bottom: 18px;
   }
 
-  .follow-banner p {
-    font-size: 13px;
-  }
-
-  .follow-banner button,
-  .follow-banner a {
-    padding: 10px 16px;
+  #overlay button {
+    padding: 12px 24px;
     font-size: 14px;
+    border-radius: 40px;
+  }
+
+  .reel {
+    width: 45px;
+    height: 45px;
   }
 }
 </style>
