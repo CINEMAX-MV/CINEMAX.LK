@@ -988,80 +988,188 @@ document.querySelectorAll(".movie img").forEach(img => {
   #overlay button:hover {
     transform: scale(1.05);
     box-shadow: 0 0 30px #ff1f2d, 0 0 60px #e50914;
-  }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CINEMAX</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  /* Floating film reels */
-  .reel {
-    position: absolute;
-    width: 80px; height: 80px;
-    border: 3px solid rgba(255,255,255,0.3);
-    border-radius: 50%;
-    box-shadow: 0 0 20px rgba(255,255,255,0.4);
-    animation: reelMove linear infinite;
-  }
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
 
-  @keyframes reelMove {
-    0% { transform: translateY(100vh) rotate(0deg); }
-    100% { transform: translateY(-100vh) rotate(360deg); }
-  }
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:'Poppins',sans-serif;
+  background:#000;
+  color:#fff;
+}
 
-  /* Blur the content under overlay */
-  body > *:not(#overlay) {
-    filter: blur(12px);
-    transition: filter 0.5s ease;
-  }
+/* ===== Overlay ===== */
+#overlay{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,0,0,0.85);
+  backdrop-filter:blur(12px);
+  z-index:9999;
+  overflow:hidden;
+}
+
+/* Background cinematic light */
+#overlay::before{
+  content:"";
+  position:absolute;
+  inset:-50%;
+  background:radial-gradient(circle at center,rgba(229,9,20,0.25),transparent 60%);
+  animation:pulse 6s infinite alternate;
+}
+
+@keyframes pulse{
+  from{transform:scale(1)}
+  to{transform:scale(1.2)}
+}
+
+/* Film grain */
+#overlay::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:url("https://grainy-gradients.vercel.app/noise.svg");
+  opacity:0.08;
+}
+
+/* Glass box */
+.overlay-box{
+  position:relative;
+  padding:55px 45px;
+  max-width:520px;
+  text-align:center;
+  border-radius:30px;
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.25);
+  box-shadow:0 0 80px rgba(229,9,20,0.8);
+  animation:zoomIn 1.2s ease;
+}
+
+@keyframes zoomIn{
+  from{opacity:0;transform:scale(0.7)}
+  to{opacity:1;transform:scale(1)}
+}
+
+/* Title */
+.overlay-box h2{
+  font-size:28px;
+  font-weight:800;
+  margin-bottom:25px;
+  line-height:1.4;
+  text-shadow:0 0 15px #e50914,0 0 35px #ff2a2a;
+}
+
+/* Subtitle strip */
+.strip{
+  background:rgba(0,0,0,0.6);
+  padding:12px;
+  border-radius:12px;
+  margin-bottom:30px;
+  font-size:14px;
+  letter-spacing:1px;
+  border:1px solid rgba(255,255,255,0.2);
+}
+
+/* Button */
+#followBtn{
+  padding:18px 45px;
+  font-size:18px;
+  font-weight:700;
+  border:none;
+  border-radius:50px;
+  color:#fff;
+  cursor:pointer;
+  background:linear-gradient(45deg,#e50914,#ff3b3b);
+  box-shadow:0 0 25px #e50914,0 0 50px #ff3b3b;
+  transition:.3s;
+}
+
+#followBtn:hover{
+  transform:scale(1.08);
+  box-shadow:0 0 40px #ff3b3b,0 0 80px #e50914;
+}
+
+/* Floating film icons */
+.reel{
+  position:absolute;
+  width:70px;height:70px;
+  border-radius:50%;
+  border:3px solid rgba(255,255,255,0.35);
+  animation:floatReel linear infinite;
+}
+
+@keyframes floatReel{
+  from{transform:translateY(110vh) rotate(0)}
+  to{transform:translateY(-120vh) rotate(360deg)}
+}
+
+/* Blur background content */
+body > *:not(#overlay){
+  filter:blur(14px);
+  transition:.5s;
+}
 </style>
 </head>
+
 <body>
 
-<!-- Overlay Section -->
+<!-- ===== Overlay ===== -->
 <div id="overlay">
-  <div class="glass-box">
-    <h2>🎬 Before accessing CINEMAX movies, follow our WhatsApp channel!</h2>
-    <button id="overlayButton">Follow on WhatsApp</button>
+  <div class="overlay-box">
+    <h2>🎬 CINEMAX EXCLUSIVE ACCESS</h2>
+
+    <div class="strip">
+      Follow our WhatsApp Channel to unlock Sinhala Movies
+    </div>
+
+    <button id="followBtn">Follow on WhatsApp</button>
   </div>
 
-  <!-- Floating reels -->
-  <div class="reel" style="left:10%; animation-duration: 25s;"></div>
-  <div class="reel" style="left:30%; animation-duration: 30s;"></div>
-  <div class="reel" style="left:50%; animation-duration: 28s;"></div>
-  <div class="reel" style="left:70%; animation-duration: 32s;"></div>
-  <div class="reel" style="left:90%; animation-duration: 27s;"></div>
+  <div class="reel" style="left:10%;animation-duration:30s"></div>
+  <div class="reel" style="left:35%;animation-duration:26s"></div>
+  <div class="reel" style="left:60%;animation-duration:32s"></div>
+  <div class="reel" style="left:85%;animation-duration:28s"></div>
 </div>
 
 <script>
-  // Sparkles generator
-  for(let i=0;i<40;i++){
-    let s=document.createElement('div');
-    s.className='sparkle';
-    s.style.left=Math.random()*100+'%';
-    s.style.top=Math.random()*100+'%';
-    s.style.animationDuration=(2+Math.random()*3)+'s';
-    document.getElementById('overlay').appendChild(s);
-  }
+const overlay = document.getElementById("overlay");
+const followBtn = document.getElementById("followBtn");
 
-  document.getElementById('overlayButton').addEventListener('click', function() {
-    // Open WhatsApp
-    window.open('https://whatsapp.com/channel/0029VbCQwiiAzNbtleGlQS1r', '_blank');
+const COOLDOWN = 30 * 60 * 1000; // 30 minutes
 
-    // Hide overlay
-    document.getElementById('overlay').style.display='none';
+function shouldShowOverlay(){
+  const last = localStorage.getItem("cinemaxFollowTime");
+  if(!last) return true;
+  return (Date.now() - last) > COOLDOWN;
+}
 
-    // Remove blur
-    document.querySelectorAll('body > *:not(#overlay)').forEach(el => {
-      el.style.filter='none';
-    });
+if(!shouldShowOverlay()){
+  overlay.style.display="none";
+  document.querySelectorAll('body > *:not(#overlay)').forEach(e=>{
+    e.style.filter="none";
   });
-</script>
-  <body>
+}
 
-  <!-- Script එක body අවසානයේ දාන්න -->
-  <script>
-    let count = localStorage.getItem('cinemaxViews'); // previous count
-    if(!count) count = 0; // first time visit
-    count++; // increment
-    localStorage.setItem('cinemaxViews', count); // save back
-    document.getElementById('viewCount').innerText = count;
-  </script>
+followBtn.addEventListener("click",()=>{
+  window.open("https://whatsapp.com/channel/0029VbCQwiiAzNbtleGlQS1r","_blank");
+
+  localStorage.setItem("cinemaxFollowTime",Date.now());
+
+  overlay.style.display="none";
+  document.querySelectorAll('body > *:not(#overlay)').forEach(e=>{
+    e.style.filter="none";
+  });
+});
+</script>
+
 </body>
 </html>
