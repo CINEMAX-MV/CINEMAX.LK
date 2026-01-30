@@ -989,19 +989,25 @@ document.querySelectorAll(".movie img").forEach(img => {
     transform: scale(1.05);
     box-shadow: 0 0 30px #ff1f2d, 0 0 60px #e50914;
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>CINEMAX</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
 body{
-  font-family:'Poppins',sans-serif;
-  background:#000;
+  font-family:'Inter',sans-serif;
+  background:#0b0b0b;
   color:#fff;
 }
 
@@ -1012,24 +1018,12 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  background:rgba(0,0,0,0.85);
-  backdrop-filter:blur(12px);
+  background:
+    linear-gradient(180deg,rgba(0,0,0,0.75),rgba(0,0,0,0.95)),
+    url("https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=1600&auto=format&fit=crop");
+  background-size:cover;
+  background-position:center;
   z-index:9999;
-  overflow:hidden;
-}
-
-/* Background cinematic light */
-#overlay::before{
-  content:"";
-  position:absolute;
-  inset:-50%;
-  background:radial-gradient(circle at center,rgba(229,9,20,0.25),transparent 60%);
-  animation:pulse 6s infinite alternate;
-}
-
-@keyframes pulse{
-  from{transform:scale(1)}
-  to{transform:scale(1.2)}
 }
 
 /* Film grain */
@@ -1039,136 +1033,138 @@ body{
   inset:0;
   background:url("https://grainy-gradients.vercel.app/noise.svg");
   opacity:0.08;
+  pointer-events:none;
 }
 
-/* Glass box */
-.overlay-box{
+/* Card */
+.overlay-card{
   position:relative;
-  padding:55px 45px;
   max-width:520px;
-  text-align:center;
-  border-radius:30px;
-  background:rgba(255,255,255,0.08);
-  border:1px solid rgba(255,255,255,0.25);
-  box-shadow:0 0 80px rgba(229,9,20,0.8);
-  animation:zoomIn 1.2s ease;
+  padding:48px 44px;
+  border-radius:18px;
+  background:rgba(20,20,20,0.65);
+  backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,0.15);
+  box-shadow:0 40px 120px rgba(0,0,0,0.9);
+  animation:fadeUp .8s ease;
 }
 
-@keyframes zoomIn{
-  from{opacity:0;transform:scale(0.7)}
-  to{opacity:1;transform:scale(1)}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(25px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* Brand */
+.brand{
+  font-weight:800;
+  letter-spacing:3px;
+  font-size:14px;
+  color:#b3b3b3;
+  margin-bottom:14px;
 }
 
 /* Title */
-.overlay-box h2{
+.overlay-card h1{
   font-size:28px;
   font-weight:800;
-  margin-bottom:25px;
-  line-height:1.4;
-  text-shadow:0 0 15px #e50914,0 0 35px #ff2a2a;
+  line-height:1.3;
+  margin-bottom:18px;
 }
 
-/* Subtitle strip */
-.strip{
-  background:rgba(0,0,0,0.6);
-  padding:12px;
-  border-radius:12px;
-  margin-bottom:30px;
+/* Divider */
+.divider{
+  width:60px;
+  height:3px;
+  background:#e50914;
+  margin:20px 0;
+  border-radius:3px;
+}
+
+/* Text box */
+.notice{
+  background:rgba(0,0,0,0.55);
+  padding:14px 16px;
+  border-radius:10px;
   font-size:14px;
-  letter-spacing:1px;
-  border:1px solid rgba(255,255,255,0.2);
+  line-height:1.6;
+  color:#ddd;
+  border:1px solid rgba(255,255,255,0.12);
+  margin-bottom:30px;
 }
 
 /* Button */
 #followBtn{
-  padding:18px 45px;
-  font-size:18px;
+  width:100%;
+  padding:16px;
+  font-size:16px;
   font-weight:700;
+  border-radius:12px;
   border:none;
-  border-radius:50px;
-  color:#fff;
   cursor:pointer;
-  background:linear-gradient(45deg,#e50914,#ff3b3b);
-  box-shadow:0 0 25px #e50914,0 0 50px #ff3b3b;
-  transition:.3s;
+  background:#25D366;
+  color:#111;
+  transition:.25s;
 }
 
 #followBtn:hover{
-  transform:scale(1.08);
-  box-shadow:0 0 40px #ff3b3b,0 0 80px #e50914;
+  transform:translateY(-2px);
+  background:#1fb858;
 }
 
-/* Floating film icons */
-.reel{
-  position:absolute;
-  width:70px;height:70px;
-  border-radius:50%;
-  border:3px solid rgba(255,255,255,0.35);
-  animation:floatReel linear infinite;
-}
-
-@keyframes floatReel{
-  from{transform:translateY(110vh) rotate(0)}
-  to{transform:translateY(-120vh) rotate(360deg)}
-}
-
-/* Blur background content */
+/* Blur background */
 body > *:not(#overlay){
-  filter:blur(14px);
-  transition:.5s;
+  filter:blur(10px);
 }
 </style>
 </head>
 
 <body>
 
-<!-- ===== Overlay ===== -->
+<!-- Overlay -->
 <div id="overlay">
-  <div class="overlay-box">
-    <h2>🎬 CINEMAX EXCLUSIVE ACCESS</h2>
+  <div class="overlay-card">
+    <div class="brand">C I N E M A X</div>
 
-    <div class="strip">
-      Follow our WhatsApp Channel to unlock Sinhala Movies
+    <h1>Exclusive Sinhala Movies Access</h1>
+
+    <div class="divider"></div>
+
+    <div class="notice">
+      To continue watching movies on CINEMAX,  
+      please follow our official WhatsApp channel.
     </div>
 
-    <button id="followBtn">Follow on WhatsApp</button>
+    <button id="followBtn">Follow WhatsApp Channel</button>
   </div>
-
-  <div class="reel" style="left:10%;animation-duration:30s"></div>
-  <div class="reel" style="left:35%;animation-duration:26s"></div>
-  <div class="reel" style="left:60%;animation-duration:32s"></div>
-  <div class="reel" style="left:85%;animation-duration:28s"></div>
 </div>
 
 <script>
 const overlay = document.getElementById("overlay");
-const followBtn = document.getElementById("followBtn");
+const btn = document.getElementById("followBtn");
 
 const COOLDOWN = 30 * 60 * 1000; // 30 minutes
 
-function shouldShowOverlay(){
-  const last = localStorage.getItem("cinemaxFollowTime");
+function allowOverlay(){
+  const last = localStorage.getItem("cinemaxAccess");
   if(!last) return true;
-  return (Date.now() - last) > COOLDOWN;
+  return Date.now() - last > COOLDOWN;
 }
 
-if(!shouldShowOverlay()){
+if(!allowOverlay()){
   overlay.style.display="none";
-  document.querySelectorAll('body > *:not(#overlay)').forEach(e=>{
+  document.querySelectorAll("body > *:not(#overlay)").forEach(e=>{
     e.style.filter="none";
   });
 }
 
-followBtn.addEventListener("click",()=>{
+btn.onclick = ()=>{
   window.open("https://whatsapp.com/channel/0029VbCQwiiAzNbtleGlQS1r","_blank");
-
-  localStorage.setItem("cinemaxFollowTime",Date.now());
-
+  localStorage.setItem("cinemaxAccess",Date.now());
   overlay.style.display="none";
-  document.querySelectorAll('body > *:not(#overlay)').forEach(e=>{
+  document.querySelectorAll("body > *:not(#overlay)").forEach(e=>{
     e.style.filter="none";
   });
-});
+};
 </script>
 
 </body>
