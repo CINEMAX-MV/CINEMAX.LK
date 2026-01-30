@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Movie Channel</title>
+  <style>
+    body { background:#0f0f0f; color:white; font-family:Arial; }
+    h1 { text-align:center; color:#00ffd5; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:15px; padding:20px; }
+    .card { background:#1c1c1c; border-radius:8px; overflow:hidden; cursor:pointer; }
+    .card img { width:100%; }
+    .card h3 { padding:10px; font-size:14px; }
+  </style>
+</head>
+<body>
+
+<h1>🎬 Movie Videos</h1>
+<div class="grid" id="videoGrid"></div>
+
+<script>
+const API_KEY = "YOUR_YOUTUBE_API_KEY";
+const CHANNEL_ID = "YOUR_CHANNEL_ID"; // only your or legal channel
+
+fetch(`https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=date&maxResults=12`)
+.then(res => res.json())
+.then(data => {
+  const grid = document.getElementById("videoGrid");
+  data.items.forEach(item => {
+    if(item.id.videoId){
+      grid.innerHTML += `
+        <div class="card" onclick="openVideo('${item.id.videoId}')">
+          <img src="${item.snippet.thumbnails.medium.url}">
+          <h3>${item.snippet.title}</h3>
+        </div>
+      `;
+    }
+  });
+});
+
+function openVideo(id){
+  window.open(`https://www.youtube.com/watch?v=${id}`, "_blank");
+}
+</script>
+
+</body>
+</html>
