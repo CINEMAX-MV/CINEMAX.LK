@@ -1007,6 +1007,14 @@ document.querySelectorAll(".movie img").forEach(img => {
     });
   });
 </script>
-
-</body>
+  <body>
+  <!-- Script එක body අවසානයේ දාන්න -->
+  <script>
+    let count = localStorage.getItem('cinemaxViews'); // previous count
+    if(!count) count = 0; // first time visit
+    count++; // increment
+    localStorage.setItem('cinemaxViews', count); // save back
+    document.getElementById('viewCount').innerText = count;
+  </script>
+  </body>
 </html>
