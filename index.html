@@ -1010,11 +1010,59 @@ document.querySelectorAll(".movie img").forEach(img => {
 </script>
   <body>
   <script>
-    let count = localStorage.getItem('cinemaxViews'); // previous count
-    if(!count) count = 0; // first time visit
-    count++; // increment
-    localStorage.setItem('cinemaxViews', count); // save back
-    document.getElementById('viewCount').innerText = count;
-  </script>
+  /* =========================
+     OVERLAY CONTROL (30 min)
+  ========================== */
+  const OVERLAY_TIME = 30 * 60 * 1000; // 30 minutes
+
+  const overlay = document.getElementById('overlay');
+  const btn = document.getElementById('overlayButton');
+
+  const lastSeen = localStorage.getItem('cinemaxOverlayTime');
+  const now = Date.now();
+
+  if (overlay) {
+    if (lastSeen && (now - lastSeen) < OVERLAY_TIME) {
+      // Hide overlay
+      overlay.style.display = 'none';
+      document.body.classList.remove('overlay-active');
+    } else {
+      // Show overlay
+      overlay.style.display = 'flex';
+      document.body.classList.add('overlay-active');
+    }
+  }
+
+  if (btn) {
+    btn.addEventListener('click', () => {
+
+      // Save overlay shown time
+      localStorage.setItem('cinemaxOverlayTime', Date.now());
+
+      // Open WhatsApp channel
+      window.open(
+        'https://whatsapp.com/channel/0029VbCQwiiAzNbtleGlQS1r',
+        '_blank'
+      );
+
+      // Hide overlay safely
+      overlay.style.display = 'none';
+      document.body.classList.remove('overlay-active');
+    });
+  }
+
+  /* =========================
+     VIEW COUNT (SAFE)
+  ========================== */
+  let count = localStorage.getItem('cinemaxViews');
+  if (!count) count = 0;
+  count++;
+  localStorage.setItem('cinemaxViews', count);
+
+  const viewEl = document.getElementById('viewCount');
+  if (viewEl) {
+    viewEl.innerText = count;
+  }
+</script>
   </body>
 </html>
