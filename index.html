@@ -1008,6 +1008,48 @@ document.querySelectorAll(".movie img").forEach(img => {
   });
 </script>
   <body>
+  <!-- ඔයාගේ overlay HTML -->
+  <div id="overlay">
+    <div class="glass-box">
+      <h2>🎬 Before accessing CINEMAX movies, follow our WhatsApp channel!</h2>
+      <button id="overlayButton">Follow on WhatsApp</button>
+    </div>
+  </div>
+
+  <!-- ඔයාගේ CSS සහ අනිත් content -->
+
+  <!-- JavaScript -->
+  <script>
+    // මේකම දැමන්න
+    const OVERLAY_KEY = "cinemax_follow_time";
+    const COOLDOWN = 30 * 60 * 1000; // 30 minutes
+
+    const overlay = document.getElementById("overlay");
+    const button = document.getElementById("overlayButton");
+
+    function canShowOverlay(){
+      const lastTime = localStorage.getItem(OVERLAY_KEY);
+      if(!lastTime) return true;
+      return (Date.now() - lastTime) > COOLDOWN;
+    }
+
+    if(!canShowOverlay()){
+      overlay.style.display = "none";
+      document.querySelectorAll('body > *:not(#overlay)').forEach(el=>{
+        el.style.filter = "none";
+      });
+    }
+
+    button.addEventListener("click",()=>{
+      window.open("https://whatsapp.com/channel/0029VbCQwiiAzNbtleGlQS1r","_blank");
+      localStorage.setItem(OVERLAY_KEY, Date.now());
+      overlay.style.display = "none";
+      document.querySelectorAll('body > *:not(#overlay)').forEach(el=>{
+        el.style.filter = "none";
+      });
+    });
+  </script>
+  </body>
   <!-- Script එක body අවසානයේ දාන්න -->
   <script>
     let count = localStorage.getItem('cinemaxViews'); // previous count
