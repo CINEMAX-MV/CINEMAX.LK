@@ -832,47 +832,193 @@ document.querySelectorAll(".movie img").forEach(img => {
 </script>
 
 </body>
-      <script>
-  const OVERLAY_TIME = 30 * 60 * 1000; // 30 minutes
-  const overlay = document.getElementById('overlay');
-  const btn = document.getElementById('overlayButton');
-
-  const lastSeen = localStorage.getItem('cinemaxOverlayTime');
-  const now = Date.now();
-
-  function showOverlay() {
-    overlay.style.display = 'flex';
-    document.body.classList.add('overlay-active');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CINEMAX Movies</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #0f0f0f;
+    color: #fff;
+    overflow-x: hidden;
   }
 
-  function hideOverlay() {
-    overlay.style.display = 'none';
-    document.body.classList.remove('overlay-active');
+  /* Overlay active blur */
+  body.overlay-active > *:not(#overlay) {
+    filter: blur(12px);
+    transition: filter 0.5s ease;
   }
 
-  // Decide whether to show overlay
-  if (!lastSeen || (now - lastSeen) >= OVERLAY_TIME) {
-    showOverlay();
-  } else {
-    hideOverlay();
+  /* Overlay */
+  #overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(10px);
+    z-index: 9999;
+    text-align: center;
+    overflow: hidden;
   }
 
-  // Overlay button click
-  btn.addEventListener('click', () => {
-    localStorage.setItem('cinemaxOverlayTime', Date.now());
-    window.open(
-      'https://whatsapp.com/channel/0029VbCQwiiAzNbtleGlQS1r',
-      '_blank'
-    );
-    hideOverlay();
-  });
+  /* Glass box */
+  #overlay .glass-box {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 25px;
+    padding: 40px 30px;
+    max-width: 450px;
+    animation: popIn 1s ease forwards;
+    box-shadow: 0 0 60px rgba(229,9,20,0.6);
+  }
 
-  // View counter
-  let count = localStorage.getItem('cinemaxViews') || 0;
-  count++;
-  localStorage.setItem('cinemaxViews', count);
+  @keyframes popIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
 
-  const viewEl = document.getElementById('viewCount');
-  if (viewEl) viewEl.innerText = count;
+  #overlay h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 25px;
+    text-shadow: 0 0 20px #e50914, 0 0 40px #e50914;
+    animation: textGlow 2s infinite alternate;
+  }
+
+  @keyframes textGlow {
+    0% { text-shadow: 0 0 10px #e50914, 0 0 20px #ff1f2d; }
+    100% { text-shadow: 0 0 20px #ff1f2d, 0 0 40px #e50914; }
+  }
+
+  #overlay button {
+    background: linear-gradient(45deg,#e50914,#ff1f2d);
+    border: none;
+    padding: 16px 35px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 0 20px #e50914, 0 0 40px #ff1f2d;
+  }
+
+  #overlay button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px #ff1f2d, 0 0 60px #e50914;
+  }
+
+  /* Floating sparkles */
+  .sparkle {
+    position: absolute;
+    width: 4px; height: 4px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: sparkleAnim 3s linear infinite;
+  }
+
+  @keyframes sparkleAnim {
+    0% { transform: translateY(0) scale(0.5); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translateY(-300px) scale(1.2); opacity: 0; }
+  }
+
+  /* Floating reels */
+  .reel {
+    position: absolute;
+    width: 70px; height: 70px;
+    border: 3px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(255,255,255,0.4);
+    animation: reelMove linear infinite;
+  }
+
+  @keyframes reelMove {
+    0% { transform: translateY(100vh) rotate(0deg); }
+    100% { transform: translateY(-100vh) rotate(360deg); }
+  }
+
+  /* Responsive text */
+  @media(max-width:480px){
+    #overlay h2 { font-size: 20px; }
+    #overlay button { padding: 14px 28px; font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- View counter display -->
+<div style="position:fixed;top:10px;right:10px;font-size:18px;font-weight:700;color:#fff;z-index:10000;">
+  Views: <span id="viewCount">0</span>
+</div>
+
+<!-- Overlay -->
+<div id="overlay">
+  <div class="glass-box">
+    <h2>🎬 Follow our WhatsApp channel before entering CINEMAX!</h2>
+    <button id="overlayButton">Follow on WhatsApp</button>
+  </div>
+
+  <!-- Floating reels -->
+  <div class="reel" style="left:10%; animation-duration: 25s;"></div>
+  <div class="reel" style="left:30%; animation-duration: 30s;"></div>
+  <div class="reel" style="left:50%; animation-duration: 28s;"></div>
+  <div class="reel" style="left:70%; animation-duration: 32s;"></div>
+  <div class="reel" style="left:90%; animation-duration: 27s;"></div>
+</div>
+
+<script>
+/* ------------------ Overlay 30 min cooldown ------------------ */
+const OVERLAY_TIME = 30*60*1000; // 30 minutes
+const overlay = document.getElementById('overlay');
+const btn = document.getElementById('overlayButton');
+const now = Date.now();
+const lastTime = localStorage.getItem('cinemaxOverlayTime');
+
+// Show overlay only if 30 min passed
+if(!lastTime || (now - lastTime) >= OVERLAY_TIME){
+  overlay.style.display='flex';
+  document.body.classList.add('overlay-active');
+}
+
+// Sparkles
+for(let i=0;i<40;i++){
+  let s=document.createElement('div');
+  s.className='sparkle';
+  s.style.left=Math.random()*100+'%';
+  s.style.top=Math.random()*100+'%';
+  s.style.animationDuration=(2+Math.random()*3)+'s';
+  overlay.appendChild(s);
+}
+
+// Overlay button click
+btn.addEventListener('click',()=>{
+  localStorage.setItem('cinemaxOverlayTime',Date.now());
+  window.open('https://whatsapp.com/channel/0029VbCQwiiAzNbtleGlQS1r','_blank');
+  overlay.style.display='none';
+  document.body.classList.remove('overlay-active');
+});
+
+
+/* ------------------ View counter ------------------ */
+let count = parseInt(localStorage.getItem('cinemaxViews')) || 0;
+count++;
+localStorage.setItem('cinemaxViews', count);
+
+const viewEl = document.getElementById('viewCount');
+if(viewEl) viewEl.innerText = count;
+
 </script>
-  </html>
+</body>
+</html>
